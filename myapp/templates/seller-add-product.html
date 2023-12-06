@@ -1,0 +1,93 @@
+{% extends 'seller-header.html' %}
+{% load static %}
+{% block content %}
+
+
+
+ <br>
+ <br>  
+<h2 class="text-center mb-4"><strong>Add Product</strong></h2>
+    <!-- Contact Section Begin -->
+    <section class="contact spad">
+
+        <div class="container">
+
+                <div class="col-lg-10 col-md-10">
+
+                    <div class="contact__form">
+                        {% if msg %}
+                            <b style="color: #0073e6;">{{msg}}</b>
+                        {% endif %}
+                        <form action="#" method="post" action="{% url 'seller-add-product' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <select name="product_categories">
+                                        <option>----Select Product Categories----</option>
+                                        <option value="Shirt">Shirt</option>
+                                        <option value="Pant">Pant</option>
+                                        <option value="Shoes">Shoes</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" placeholder="Product Name" name="product_name" style="color:black;">
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" placeholder="Product Brand" name="product_brand" style="color:black;">
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" placeholder="Product Size" name="product_size" style="color:black;">
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" placeholder="Product Price" name="product_price" style="color:black;">
+                                </div>
+                                <div class="col-lg-10">
+                                    <textarea placeholder="Product Details" name="product_details" style="color:black; height: 13rem;"></textarea>
+                                </div>
+                                <div class="col-lg-10">
+                                    <textarea placeholder="Product Information" name="product_information" style="color:black; height: 13rem;"></textarea>
+                                </div>
+                                <div class="col-lg-10">
+                                    Product Pic<input type="file" name="product_pic" style="color:black;">
+                                </div>
+                                <div class="col-lg-10">
+                                    
+                                    <button type="submit" class="site-btn">Add Poduct</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- Contact Section End -->
+
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/mixitup.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
+{% endblock %}

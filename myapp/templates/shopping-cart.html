@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <script src="https://js.stripe.com/v3/"></script>
+  </head>
+    <body>
+
+
+        <!-- Breadcrumb Section Begin -->
+        <section class="breadcrumb-option">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb__text">
+                            <h4>Shopping Cart</h4>
+                            <div class="breadcrumb__links">
+                                <a href="./index.html">Home</a>
+                                <a href="./shop.html">Shop</a>
+                                <span>Shopping Cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Breadcrumb Section End -->
+
+        <!-- Shopping Cart Section Begin -->
+        <section class="shopping-cart spad">
+            <div class="container">
+                {% if carts %}
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="shopping__cart__table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        {% for i in carts %}
+                                        <tr>
+                                            <td class="product__cart__item">
+                                                <div class="product__cart__item__pic">
+                                                    <a href="{% url 'single-product' pk=i.product.pk %}">
+                                                        <img src="{{i.product.product_pic.url}}" style="width: 5.625rem; height: 5.625rem; object-fit: contain;" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="product__cart__item__text">
+                                                    <a href="{% url 'single-product' pk=i.product.pk %}">
+                                                        <h6>{{i.product.product_name}}</h6>
+                                                    </a>
+                                                    <h5>&#8377;{{i.product_price}}</h5>
+                                                </div>
+                                            </td>
+                                            <form method="post" action="{% url 'change-quantity' %}">
+                                            {% csrf_token %}
+                                                <td class="quantity__item">
+                                                    <input type="hidden" name="cid" value="{{i.pk}}">
+                                                    <input type="number" name="product_quantity" value="{{i.product_quantity}}" min="1" style="width: 37%;" onchange="this.form.submit()">
+                                                </td>
+                                            </form>
+                                            <td class="cart__price">&#8377; {{i.total_price}}</td>   
+                                        </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="continue__btn">
+                                    <a href="{% url 'shop' %}">Continue Shopping</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cart__total">
+                            <h6>Cart total</h6>
+                            <form method="post">
+                            {% csrf_token %}
+                                <ul>
+                                    <input type="hidden" id="net_price" name="amount" value="{{net_price}}">
+                                    <li>Net Price <span>&#8377; {{net_price}}</span></li>
+                                </ul>
+                                <a href="#" class="primary-btn" id="checkout-button">Proceed to checkout</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                    <div class="center-text" style="color: black; margin-top: -2.5%; text-align: center;">
+                        <h1 style="margin-top:1.5rem">No Product In Cart</h1>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+        <!-- Shopping Cart Section End -->
+
+     
+        <!-- Search Begin -->
+        <div class="search-model">
+            <div class="h-100 d-flex align-items-center justify-content-center">
+                <div class="search-close-switch">+</div>
+                <form class="search-model-form">
+                    <input type="text" id="search-input" placeholder="Search here.....">
+                </form>
+            </div>
+        </div>
+        <!-- Search End -->
+
+        <!-- Js Plugins -->
+        <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+        <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+        <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+        <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+        <script src="{% static 'js/mixitup.min.js' %}"></script>
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script type="text/javascript">
+
+            var stripe = Stripe('pk_test_51OGZkQSDE1QP03OQuQbSH5sWU8BGVnhOVUvyVFGbMnsAKBe6lBwCAaPXIHrCIvsewNttin7FKkLyIskQuEU70UXI00mEF33o8q');
+            var checkoutButton = document.getElementById('checkout-button');
+
+            checkoutButton.addEventListener('click', function() {
+         
+         
+            fetch('/create-checkout-session/', {
+            method: 'POST',
+                headers:{
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest', //Necessary to work with request.is_ajax()
+
+                },
+                body: JSON.stringify({'post_data':'{{net_price}}'})
+            })
+            .then(function(response) {
+             return response.json();
+            })
+            .then(function(session) {
+            return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(function(result) {
+            // If `redirectToCheckout` fails due to a browser or network
+            // error, you should display the localized error message to your
+            // customer using `error.message`.
+                if (result.error) {
+                alert(result.error.message);
+                }
+                })
+            .catch(function(error) {
+            console.error('Error:', error);
+            });
+            });
+         </script>
+    </body>
+</html>
+{% endblock %}

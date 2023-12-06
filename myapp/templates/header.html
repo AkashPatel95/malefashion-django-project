@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/elegant-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a href="#">Sign in</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>Usd <i class="arrow_carrot-down"></i></span>
+                <ul>
+                    <li>USD</li>
+                    <li>EUR</li>
+                    <li>USD</li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
+            <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
+            <a href="{% url 'shopping-cart' %}"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>Free shipping, 30-day return or refund guarantee.</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p>Free shipping, 30-day return or refund guarantee.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                <a href="#">Sign in</a>
+                                <a href="#">FAQs</a>
+                            </div>
+                            <div class="header__top__hover">
+                                <span>Usd <i class="arrow_carrot-down"></i></span>
+                                <ul>
+                                    <li>USD</li>
+                                    <li>EUR</li>
+                                    <li>USD</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li class="{% if request.path == '/' %} active {% endif %}"><a href="/">Home</a></li>
+                            <li class="{% if request.path == '/shop/' %} active {% endif %}"><a href="{% url 'shop' %}">Shop</a></li>
+                            
+                            {% if request.session.email %}
+                                <li><a href="#">Pages</a>
+                                    <ul class="dropdown">
+                                        <li class="{% if request.path == '/about/' %} active {% endif %}"><a href="{% url 'about' %}">About Us</a></li>
+                                        <li class="{% if request.path == '/checkout/' %} active {% endif %}"><a href="{% url 'wishlist' %}">Wishlist [{{request.session.wishlist_count}}]</a></li>
+                                        <li class="{% if request.path == '/shopping-cart/' %} active {% endif %}"><a href="{% url 'shopping-cart' %}">
+                                        Cart [{{request.session.cart_count}}]</a></li>
+                                        <li class="{% if request.path == '/myorder/' %} active {% endif %}"><a href="{% url 'myorder' %}">My Order</a></li>
+                                        <li class="{% if request.path == '/contact/' %} active {% endif %}"><a href="{% url 'contact' %}">Contacts</a></li>
+                                    </ul>
+                                </li>
+                                <li class="{% if request.path == '/change-password/' %} active {% endif %}"><a href="{% url 'change-password' %}">Change Password</a></li>
+                                <li class="{% if request.path == '/logout/' %} active {% endif %}"><a href="{% url 'logout' %}">Logout</a></li>
+                            {% else %}
+                                <li><a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li class="{% if request.path == '/about/' %} active {% endif %}"><a href="{% url 'about' %}">About Us</a></li>
+                                    <li class="{% if request.path == '/contact/' %} active {% endif %}"><a href="{% url 'contact' %}">Contacts</a></li>
+                                </ul>
+                            </li>
+                                <li class="{% if request.path == '/signup/' %} active {% endif %}"><a href="{% url 'signup' %}">SignUp</a></li>
+                                <li class="{% if request.path == '/login/' %} active {% endif %}"><a href="{% url 'login' %}">Login</a></li>
+                            {% endif %}
+                            
+                        </ul>
+                    </nav>
+                </div>
+                {% if request.session.email %}
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
+                        <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
+                        <a href="{% url 'shopping-cart' %}"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{request.session.cart_count}}</span></a>
+                    </div>
+                </div>
+                {% else %}
+                    <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
+                        <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->

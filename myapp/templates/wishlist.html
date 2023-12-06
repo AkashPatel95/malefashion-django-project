@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>Wishlist</h4>
+                        <div class="breadcrumb__links">
+                            <a href="./index.html">Home</a>
+                            <span>Wishlist</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shop Section Begin -->
+    <section class="shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    {% if msg %}
+                        <b style="color: #0073e6;">{{msg}}</b>
+                    {% endif %}
+                    <div class="shop__product__option">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="shop__product__option__left"class="card-heading" data-toggle="collapse" data-target="#collapseOne" class="card">
+                                    <h5><b>Your Wishlist</b></h5>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        {% if wishlists %}
+                        {% for i in wishlists %}
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <a href="{% url 'single-product' pk=i.product.pk %}">
+                                    <div class="product__item__pic set-bg" data-setbg="{{i.product.product_pic.url}}" style="width: 250px; height: 320px;">
+                                        <ul class="product__hover">
+                                            <li><img src="{% static 'img/icon/product-detail.png' %}" alt=""> <span>Product Detail</span></li>
+                                        </ul>
+                                    </div>
+                                </a>
+
+                                <div class="product__item__text">
+                                    <h6>{{i.product.product_name}}</h6>
+                                    <h5> &#8377; {{i.product.product_price}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                            <h1 style="margin-top: 0.9375rem;">No Products In Wishlist</h1> 
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Section End -->
+
+ 
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/mixitup.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
+{% endblock %}
