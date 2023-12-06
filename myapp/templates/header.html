@@ -104,9 +104,9 @@
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li class="{% if request.path == '/' %} active {% endif %}"><a href="/">Home</a></li>
-                            <li class="{% if request.path == '/shop/' %} active {% endif %}"><a href="{% url 'shop' %}">Shop</a></li>
                             
                             {% if request.session.email %}
+                            <li class="{% if request.path == '/shop/' %} active {% endif %}"><a href="{% url 'shop' %}">Shop</a></li>
                                 <li><a href="#">Pages</a>
                                     <ul class="dropdown">
                                         <li class="{% if request.path == '/about/' %} active {% endif %}"><a href="{% url 'about' %}">About Us</a></li>

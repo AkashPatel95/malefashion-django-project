@@ -65,8 +65,8 @@ def main(request):
 	return render(request,'main.html')
 
 def shop(request):
-	user=User.objects.get(email=request.session['email'])
 	try:
+		user=User.objects.get(email=request.session['email'])
 		if user.usertype=='buyer':
 			products=Product.objects.all()
 			return render(request,'shop.html',{'products':products})
