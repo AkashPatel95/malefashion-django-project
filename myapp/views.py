@@ -370,25 +370,36 @@ def validate_signup(request):
 
 @csrf_exempt
 def create_checkout_session(request):
-	amount = int(json.load(request)['post_data'])
-	final_amount=amount*100
-	
-	session = stripe.checkout.Session.create(
-		payment_method_types=['card'],
-		line_items=[{
-			'price_data': {
-				'currency': 'inr',
-				'product_data': {
-					'name': 'Checkout Session Data',
-					},
-				'unit_amount': final_amount,
-				},
-			'quantity': 1,
-			}],
-		mode='payment',
-		success_url=YOUR_DOMAIN + '/success.html',
-		cancel_url=YOUR_DOMAIN + '/cancel.html',)
-	return JsonResponse({'id': session.id})
+    amount = int(json.load(request)['post_data'])
+    final_amount = amount * 100
+    
+    try:
+        success_url = 'http://malefashionshop.pythonanywhere.com/success.html'
+        cancel_url = 'http://malefashionshop.pythonanywhere.com/cancel.html'
+    except Exception as e:
+        print(f"An error occurred while constructing URLs: {e}")
+        success_url = YOUR_DOMAIN + '/success.html'
+        cancel_url = YOUR_DOMAIN + '/cancel.html'
+    
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': 'inr',
+                'product_data': {
+                    'name': 'Checkout Session Data',
+                },
+                'unit_amount': final_amount,
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url=success_url,
+        cancel_url=cancel_url,
+    )
+
+    return JsonResponse({'id': session.id})
+
 
 def success(request):
 	user=User.objects.get(email=request.session['email'])
