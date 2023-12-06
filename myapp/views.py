@@ -374,8 +374,8 @@ def create_checkout_session(request):
     final_amount = amount * 100
     
     try:
-        success_url = 'http://malefashionshop.pythonanywhere.com/success.html'
-        cancel_url = 'http://malefashionshop.pythonanywhere.com/cancel.html'
+        success_url = 'http://malefashiononline.pythonanywhere.com/success.html'
+        cancel_url = 'http://malefashiononline.pythonanywhere.com/cancel.html'
     except Exception as e:
         print(f"An error occurred while constructing URLs: {e}")
         success_url = YOUR_DOMAIN + '/success.html'
